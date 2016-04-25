@@ -1,2 +1,3 @@
 # RaktarDjango
-Online invoice system using Django, Mysql, ReportLab
+Online invoice system using Django, Mysql, ReportLab version 1.2
+Documentation just started....

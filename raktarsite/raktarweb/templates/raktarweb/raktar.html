@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+{% extends 'raktarweb/base.html' %}
+<html lang="en">
+<head>
+</head>
+<body>
+{% block content %}
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">RaktarWeb</a>
+    </div>
+    <div>
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#">Információ</a></li>
+        <li><a href="#">Törzsadatok</a></li>
+        <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Számla <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="/raktarweb/ujszamla/">Új számla adás</a></li>
+            <li><a href="#">Számla keresés</a></li>
+            <li><a href="/raktarweb/ujsztornozas/">Sztornózás</a></li>
+            <li><a href="/raktarweb/adatexport/">Adat export</a></li>
+          </ul>
+        </li>
+
+        <li><a href="#">Kilépés</a></li>
+         <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Tesztlapok <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="/raktarweb/pdfgeneration/">Pdf generálás</a></li>
+            <li><a href="/raktarweb/printlist/">Főcsoportok listája</a></li>
+            <li><a href="/raktarweb/printinvoice/">Számla print</a></li>
+            <li><a href="/raktarweb/jsonexample/">Json</a></li>
+            <li><a href="/raktarweb/sztornozas/">Sztornózás linken keresztül</a></li>
+            <li><a href="/raktarweb/downloadxml/">Download xml</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+  
+<div class="container">
+  <h3>Navbar With Dropdown</h3>
+  <p>This example adds a dropdown menu for the "Page 1" button in the navigation bar.</p>
+</div>
+{% endblock %}
+</body>
+</html>

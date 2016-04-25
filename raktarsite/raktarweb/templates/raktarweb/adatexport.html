@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Adatexport</title>
+    <script type="text/javascript">
+function download(event)
+{
+ //window.alert();
+ event.preventDefault();
+ window.location = '/E:/Temp/adatexport.xml'
+}
+</script>
+</head>
+<body>
+
+<p id="static_download" onclick="download(event)">Static download</p>
+
+<p><a id="back" href="/raktarweb/">Vissza a főoldalra </a></p>
+    <form action="" method="POST">{% csrf_token %}
+        {{szamlaszam_select_kezdeti_form}}
+        {{szamlaszam_select_vegso_form}}
+        <button type="submit" name="btn_search" value="Submit" />Számlák keresése</button>
+
+        {% if latest_szamlatorzs_list %}
+        <ul>
+        {% for szamlatorzs in latest_szamlatorzs_list %}
+           <li><a href="{% url 'raktarweb:detail' szamlatorzs.id %}">{{ szamlatorzs.szamlaszam }}</a></li>
+            <!--li>{{ szamlatorzs.szamlaszam }}</a></li-->
+        {% endfor %}
+        </ul>
+        <p><a href="/raktarweb/downloadxml">XML adatexport letöltés </a></p>
+
+
+
+        {% else %}
+          <p>Nincsennek számlák rögzítve ebben a tartományban.</p>
+        {% endif %}
+    </form>
+
+</body>
+</html>

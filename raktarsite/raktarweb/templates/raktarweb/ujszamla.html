@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+{% extends 'raktarweb/base.html' %}
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <title>Új számla</title>
+
+</head>
+
+<body>
+ {% block content %}
+<h1>Új számla adás</h1>
+<h2>Számla törzs</h2>
+
+<form action="" method="POST">{% csrf_token %}
+    <div class="section">
+
+        <p id="beginParagraph">Vevőadatok megadása</p>
+        {% if error_message_vevo %}<p class="error"><strong>{{ error_message_vevo }}</strong></p>{% endif %}
+        <p id="id_errorJS" class="errorJS"></p>
+        <hr>
+        <hX id="vevoLabel">Vevő:</hX>
+        {{szamla_torzs_form.vevo_fk}}
+         <button type="submit" name="btn_vevoadatok" value="Submit" onclick="myCheckIfSelectedDropDown('id_vevo_fk')" />Vevő adatok</button>
+        <a id="ujvevo" href="http://127.0.0.1:8000/admin/raktarweb/vevo/">Új vevő rögzítése</a>
+        <br/>
+        <br/>
+        <table>
+             <col width="330">
+             <col width="330">
+            <tr>
+               <td><b>Cím:</b> {{cim}}</td>
+               <td><b>Adószám:</b> {{adoszam}}</td>
+            </tr>
+         </table>
+        <br/>
+         <table>
+             <col width="330">
+             <col width="330">
+             <col width="330">
+            <tr>
+               <td><b>Fizetési mód:</b> {{szamla_torzs_form.fizetesimod}}</td>
+               <td><b>Számla kelte:</b> {{ szamla_torzs_form.szamlakelte}}</td>
+                <td><b>Számlaszám:</b> {{ szamla_torzs_form.szamlaszam}}</td>
+                <td><b>Számlatipus:</b> {{ szamla_torzs_form.szamlatipus}}</td>
+                <td><b>Logged in as:</b> {{ szamla_torzs_form.loggedinuser}}</td>
+             </tr>
+         </table>
+        <br/>
+         <table>
+             <col width="330">
+             <col width="330">
+            <tr>
+               <td><b>Rendszám:</b> {{szamla_torzs_form.rendszam}}</td>
+               <td><b>Gépjármű fajta:</b> {{ szamla_torzs_form.gepjarmufajta}}</td>
+             </tr>
+             <tr>
+               <td><b>Gyártmány:</b> {{szamla_torzs_form.gyartmany}}</td>
+               <td><b>Gépjármű tipus:</b> {{ szamla_torzs_form.gepjarmutipus}}</td>
+             </tr>
+             <tr>
+               <td><b>Rendelésszám:</b> {{szamla_torzs_form.rendelesszam}}</td>
+               <td><b>Gépjármű km/h állás:</b> {{ szamla_torzs_form.gepjarmukmh}}</td>
+             </tr>
+         </table>
+         <br/>
+        <hr>
+        <h4 id="id-termek-kereso">Termék kereső</h4>
+        {% if error_message_raktar_elem %}<p class="error"><strong>{{ error_message_raktar_elem }}</strong></p>{% endif %}
+          {{ raktar_elem_form.tetelszam }}
+        <button type="submit" id = "id_btn_aktualis_tetel_kereses" name="btn_aktualis_tetel_kereses" value="Submit" />Tétel kiválasztása</button>
+
+        <hr>
+         <h3 id="id-aktualis-termek-alcim">Aktuális termék</h3>
+        <table id="aktualis-termek" class="table table-condensed table-bordered table-striped">
+          <col width="150">
+          <col width="50">
+          <col width="63">
+          <col width="90">
+          <col width="45">
+          <col width="90">
+          <col width="30">
+          <col width="80">
+          <col width="90">
+          <col width="90">
+          <tr>
+             <th>Tétel</th>
+             <th>Meny</th>
+             <th>M.e.</th>
+             <th>Brutto</th>
+             <th>Kedv%</th>
+             <th>Netto</th>
+             <th>Áfa</th>
+             <th>Nettoérték</th>
+              <th>Áfaérték</th>
+             <th>Bruttoérték</th>
+          </tr>
+        </table>
+        <p>
+            {% if error_message_aktualizalas %}<p class="error"><strong>{{ error_message_aktualizalas }}</strong></p>{% endif %}
+            {{ aktualis_tetel_form }}</p>
+            <p><button type="submit" id = "id_add_tetel" name="btn_add_tetel" value="Submit" />Tétel hozzáadása a számlához</button>
+        </p>
+        <hr>
+
+    </div>
+
+    <div class="items">
+
+    <h2>Számla tételek</h2>
+
+      <table id="tetelek" class="table table-condensed table-bordered table-striped">
+          <thead>
+      <tr>
+        <th>Megnevezés</th>
+      <th>Meny</th>
+      <th>M.e.</th>
+      <th>Bruttoár</th>
+          <th>K%</th>
+          <th>Nettoár</th>
+          <th>Áfa</th>
+          <th>Nettoérték</th>
+          <th>Áfaérték</th>
+          <th>Bruttoérték</th>
+      </tr>
+    </thead>
+
+          <tbody>
+
+      {% if tetelek_list %}
+    <ul>
+    {% for tetel in tetelek_list %}
+       <tr>
+    <td>{{tetel.megnevezes}}</td>
+    <td>{{tetel.mennyiseg}}</td>
+    <td>{{tetel.mennyisegiegyseg}}</td>
+    <td>{{tetel.bruttoegysegar}}</td>
+    <td>{{tetel.kedvezmenyszazalek}}</td>
+    <td>{{tetel.nettoegysegar}}</td>
+    <td>{{tetel.afakulcs}}</td>
+           <td>{{tetel.nettoertek}}</td>
+           <td>{{tetel.afaertek}}</td>
+    <td>{{tetel.bruttoertek}}</td>
+              <td><p><a class="delete" href="#">Delete</a></p></td>
+        </tr>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>Még nincsennek tételek aktualizálva.</p>
+{% endif %}
+    </tbody>
+
+
+      </table>
+
+    <p id="megjegyzesParagraph">Megjegyzések: {{ szamla_torzs_form.megjegyzesegyedi}}
+    <a id="megjegyzesek" href="http://127.0.0.1:8000/admin/raktarweb/megjegyzes/">Alap megjegyzések megtekintése, szerkesztése</a></p>
+
+     </div>
+    <input type="submit" name="btn_SavePdf" value="Submit" />
+
+</form>
+
+
+{% endblock %}
+</body>
+</html>

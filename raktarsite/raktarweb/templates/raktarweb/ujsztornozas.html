@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <title>Új sztornozás</title>
+</head>
+
+<body>
+<p><a id="back" href="/raktarweb/">Vissza a főoldalra </a></p>
+    <form action="" method="POST">{% csrf_token %}
+        {{szamlaszam_select_form}}
+        <button type="submit" name="btn_search" value="Submit" />Számla keresés</button>
+
+        <h2>Számla törzs</h2>
+        <div id = "myDiv_id">
+            <table id="my_id_table">
+             <col width="330">
+             <col width="330">
+             <col width="330">
+            <tr>
+               <td><b>Fizetési mód:</b> {{szamlatorzs.fizetesimod}}</td>
+               <td><b>Számla kelte:</b> {{ szamlatorzs.szamlakelte}}</td>
+                <td><b>Számlaszám:</b> {{ szamlatorzs.szamlaszam}}</td>
+                <td><b>Számlatipus:</b> {{ szamlatorzs.szamlatipus}}</td>
+                <td><b>Logged in as:</b> {{ szamlatorzs.loggedinuser}}</td>
+             </tr>
+         </table>
+        <br/>
+         <table>
+             <col width="330">
+             <col width="330">
+            <tr>
+               <td><b>Rendszám:</b> {{szamlatorzs.rendszam}}</td>
+               <td><b>Gépjármű fajta:</b> {{ szamlatorzs.gepjarmufajta}}</td>
+             </tr>
+             <tr>
+               <td><b>Gyártmány:</b> {{szamlatorzs.gyartmany}}</td>
+               <td><b>Gépjármű tipus:</b> {{ szamlatorzs.gepjarmutipus}}</td>
+             </tr>
+             <tr>
+               <td><b>Rendelésszám:</b> {{szamlatorzs.rendelesszam}}</td>
+               <td><b>Gépjármű km/h állás:</b> {{ szamlatorzs.gepjarmukmh}}</td>
+             </tr>
+         </table>
+         <br/>
+        </div>
+
+
+<h2>Számla tételek</h2>
+
+      <table id="tetelek" class="table table-condensed table-bordered table-striped">
+          <thead>
+      <tr>
+        <th>Megnevezés</th>
+      <th>Meny</th>
+      <th>M.e.</th>
+      <th>Bruttó.ár</th>
+      <th>Kedv%</th>
+      <th>Kedv.ár</th>
+      <th>Áfa%</th>
+      <th>Netto</th>
+      <th>Bruttó.összeg</th>
+      </tr>
+    </thead>
+
+          <tbody>
+
+      {% if tetelek_list %}
+    <ul>
+    {% for tetel in tetelek_list %}
+       <tr>
+    <td>{{tetel.megnevezes}}</td>
+    <td>{{tetel.mennyiseg}}</td>
+    <td>{{tetel.mennyisegiegyseg}}</td>
+    <td>{{tetel.bruttoegysegar}}</td>
+    <td>{{tetel.kedvezmenyszazalek}}</td>
+    <td>{{tetel.kedvezmenyegysegar}}</td>
+    <td>{{tetel.afakulcs}}</td>
+              <td>{{tetel.nettoegysegar}}</td>
+    <td>{{tetel.bruttoertek}}</td>
+        </tr>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>Nincsenek tételek aktualizálva.</p>
+{% endif %}
+    </tbody>
+</table>
+        <p>
+         <button type="submit" name="btn_sztorno" value="Submit" />Sztornózás</button>
+        </p>
+ </form>
+
+<script type="text/javascript">
+ function showhide(id) {
+    var e = document.getElementById(id);
+    e.style.display = (e.style.display == 'none') ? 'block' : 'none';
+ }
+</script>
+</body>
+</html>

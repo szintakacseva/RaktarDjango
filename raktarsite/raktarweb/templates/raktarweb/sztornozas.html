@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static 'raktarweb/style.css' %}" />
+<head lang="hu">
+    <meta charset="UTF-8">
+    <title>Számlák</title>
+</head>
+<body>
+
+{% if latest_szamlatorzs_list %}
+    <ul>
+    {% for szamlatorzs in latest_szamlatorzs_list %}
+        <!--li><a href="/polls/{{ question.id }}/">{{ question.question_text }}</a></li-->
+        <li><a href="{% url 'raktarweb:detail' szamlatorzs.id %}">{{ szamlatorzs.szamlaszam }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>Nincsennek számlák rögzítve.</p>
+{% endif %}
+</body>
+</html>

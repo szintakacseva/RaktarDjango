@@ -1,0 +1,18 @@
+{% extends 'raktarweb/base.html' %}
+<html lang="hu">
+<head>
+</head>
+<body>
+{% block content %}
+{% if user.is_authenticated %}
+<a href="/raktarweb/raktar/">RaktarWeb</a><br />
+<a href="/raktarweb/logout/">Logout</a><br />
+{% else %}
+<a href="/raktarweb/register/">Register Here</a><br />
+<a href="/raktarweb/login/">Login</a><br />
+{% endif %}
+{% endblock %}
+</body>
+</html>
+
+

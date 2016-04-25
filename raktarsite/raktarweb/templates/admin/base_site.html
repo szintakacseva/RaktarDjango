@@ -1,0 +1,9 @@
+{% extends "admin/base.html" %}
+
+{% block title %}{{ title }} | {{ site_title|default:_('Raktár site admin') }}{% endblock %}
+
+{% block branding %}
+<h1 id="site-name"><a href="{% url 'admin:index' %}">Raktár</a><a href="{% url 'admin:index' %}"> Adminisztráció</a></h1>
+{% endblock %}
+
+{% block nav-global %}{% endblock %}

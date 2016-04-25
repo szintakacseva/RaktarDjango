@@ -1,0 +1,40 @@
+#beginParagraph {
+    font-size:120%;
+    color: green;
+    font-weight: bold;
+    }
+
+#vevoLabel{
+    font-size:105%;
+    font-weight: bold;
+    }
+
+#ujvevo{
+    padding: 80px;
+    }
+
+#id_megjegyzesek{
+    height:20px;
+    width:300px;
+    }
+.section, .items {
+  padding: 0px 15px;
+    }
+.item {
+  background-color: #dcf0f7;
+  border: 1px solid #ddd;
+  margin-bottom: 4px;
+  padding: 5px 15px;
+}
+
+.error {
+  color: red;
+  font-weight: bold;
+  font-size:140%;
+}
+
+.errorJS {
+  color: pink;
+  font-weight: bold;
+  font-size:160%;
+}

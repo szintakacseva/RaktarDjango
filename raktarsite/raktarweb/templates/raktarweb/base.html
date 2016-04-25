@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+<head>
+    <title>RaktarWeb</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="{% static 'raktarweb/raktarweb.css' %}" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="{% static 'raktarweb/js/raktarweb.js' %}"></script>
+</head>
+<body>
+<div class="page-header">
+        <p class="offscreen">Raktár web alkalmazás</p>
+{% if user.is_authenticated %}
+<p>Raktárweb... hello {{ user.username }}!</p>
+{% else %}
+<p>Raktárweb... hello!</p>
+{% endif %}
+    <p><a id="back" href="/raktarweb/">Vissza a főoldalra </a></p>
+    </div>
+    <div class="content container">
+        <div class="row">
+            <div class="col-md-8">
+            {% block content %}
+            {% endblock %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>

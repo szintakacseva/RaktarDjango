@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head lang="hu">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+<h1>{{ szamlatorzs.szamlaszam }}</h1>
+
+<ul>
+{% for szamlatetel in szamlatorzs.szamlatetel_set.all %}
+    <li>{{ szamlatetel.megnevezes }} -- {{ szamlatetel.bruttoar }}</li>
+{% endfor %}
+</ul>
+
+<a href="{% url 'raktarweb:detail' szamlatorzs.id %}">Vote again?</a>
+
+</body>
+</html>

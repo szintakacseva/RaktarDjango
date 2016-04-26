@@ -102,7 +102,8 @@ class MyPrint:
 
         styles = getSampleStyleSheet()
         styles.add(ParagraphStyle(name='TableHeader', fontName='DejaVuSerif', fontSize = 7.5))
-        styles.add(ParagraphStyle(name='TableCell', fontName='DejaVuSerif', fontSize=6.5))
+        styles.add(ParagraphStyle(name='TableCell', fontName='DejaVuSerif', fontSize=7.2, spaceBefore=6, spaceAfter=6))
+        styles.add(ParagraphStyle(name='TableCellB', fontName='DejaVuSerifB', fontSize=7.2))
 
         # Our container for 'Flowable' objects
         elements = []
@@ -129,9 +130,7 @@ class MyPrint:
         #elements.append(Image('raktarweb/static/images/raktar.png', hAlign= 'LEFT'))
         elements.append(Image(selectedCeg.logo, hAlign= 'LEFT'))
 
-
         #Add ceg data
-
         cegcim = repr(selectedCeg.iranyitoszam) + ', ' + selectedCeg.varos + ', ' + selectedCeg.utcaHazszam
         cegadoszam = 'adószám: ' + selectedCeg.adoszam
         cegbankszamlaszam = 'bankszámla: ' + selectedCeg.bankszamlaszam
@@ -139,7 +138,6 @@ class MyPrint:
         cegweblap = 'weblap: '+ selectedCeg.weblap
 
         #Add vevo data
-
         iranyitoszam = repr(selectedVevo.iranyitoszam)
         vevocim = iranyitoszam + ', ' + selectedVevo.varos + ', ' + selectedVevo.utcaHazszam
         vevorendszam = 'Gépjármű rendszáma:   ' + selectedSzamlatorzs.rendszam
@@ -149,74 +147,38 @@ class MyPrint:
         vevogepjarmukmh = 'Gépjarmű km óra:   ' + selectedSzamlatorzs.gepjarmukmh
 
 
-        ceg = [[ Paragraph("<b>Szolgáltató:</b>", styles['TableHeader'])],
-                     [selectedCeg.nev],
-                     [cegcim],
-                     [cegadoszam],
-                     [cegbankszamlaszam],
-                     [cegemail],
-                     [cegweblap],
-                     ['']]
+        ceg = [
+               [Paragraph("<b>Szolgáltató:</b>", styles['TableHeader'])],
+               [Paragraph(selectedCeg.nev, styles['TableCellB'])],
+               [Paragraph(cegcim, styles['TableCell'])],
+               [Paragraph(cegadoszam, styles['TableCell'])],
+               [Paragraph(cegbankszamlaszam, styles['TableCell'])],
+               [Paragraph(cegemail, styles['TableCell'])],
+               [Paragraph(cegweblap, styles['TableCell'])],
+               ['']]
 
-        #megrendelo.append(Paragraph("<b>Megrendelő:</b>", styles['TableHeader']))
-        #megrendelo.append(Paragraph(selectedVevo.nev, styles['TableHeader']))
-        iranyitoszam = repr(selectedVevo.iranyitoszam)
-        vevocim = iranyitoszam + ', ' + selectedVevo.varos + ', ' + selectedVevo.utcaHazszam
-        #megrendelo.append(Paragraph(vevocim, styles['TableCell']))
-        if selectedSzamlatorzs.rendszam:
-           vevorendszam = 'Gépjármű rendszáma:   ' + selectedSzamlatorzs.rendszam
-           #megrendelo.append(Paragraph(vevorendszam, styles['TableCell']))
-        else:
-            vevorendszam = None
-        if selectedSzamlatorzs.gyartmany:
-            vevogyartmany = 'Gépjármű gyártmánya:   ' + selectedSzamlatorzs.gyartmany
-            #megrendelo.append(Paragraph(vevogyartmany, styles['TableCell']))
-        else:
-            vevogyartmany = None
-        if selectedSzamlatorzs.gepjarmutipus:
-            vevogepjarmutipus = 'Gépjármű tipusa:   ' + selectedSzamlatorzs.gepjarmutipus
-            #megrendelo.append(Paragraph(vevogepjarmutipus, styles['TableCell']))
-        else:
-            vevogepjarmutipus = None
-        if selectedSzamlatorzs.gepjarmufajta:
-            vevogepjarmufajta = 'Gépjarmű fajtája:   ' + selectedSzamlatorzs.gepjarmufajta
-            #megrendelo.append(Paragraph(vevogepjarmufajta, styles['TableCell']))
-        else:
-            vevogepjarmufajta = None
-        if selectedSzamlatorzs.gepjarmukmh:
-            vevogepjarmukmh = 'Gépjarmű km óra:   ' + selectedSzamlatorzs.gepjarmukmh
-            #megrendelo.append(Paragraph(vevogepjarmukmh, styles['TableCell']))
-        else:
-            vevogepjarmukmh = None
+        megrendelo = [
+                     [Paragraph("<b>Megrendelő:</b>", styles['TableHeader'])],
+                     [Paragraph('{}'.format(selectedVevo.nev), styles['TableCellB'])],
+                     [Paragraph('{}'.format(vevocim), styles['TableCell'])],
+                     [Paragraph('{}'.format(vevorendszam), styles['TableCell'])],
+                     [Paragraph('{}'.format(vevogyartmany), styles['TableCell'])],
+                     [Paragraph('{}'.format(vevogepjarmutipus), styles['TableCell'])],
+                     [Paragraph('{}'.format(vevogepjarmufajta), styles['TableCell'])],
+                     [Paragraph('{}'.format(vevogepjarmukmh), styles['TableCell'])]
+                     ]
 
-        megrendelo = [[Paragraph("<b>Megrendelő:</b>", styles['TableHeader'])],
-                     [Paragraph(selectedVevo.nev, styles['TableHeader'])],
-                     [selectedVevo.nev],
-                     [vevocim],
-                     [vevorendszam],
-                     [vevogyartmany],
-                     [vevogepjarmutipus],
-                     [vevogepjarmufajta],
-                     [vevogepjarmukmh]]
-
+        #TO DO: filter the null values from megrendelo
         cegtable = Table(ceg, colWidths=[doc.width/2.0])
         megrendelotable = Table(megrendelo, colWidths=[doc.width/2.0])
         data = [[cegtable, megrendelotable]]
         cegtable = Table(data, colWidths=[doc.width/2.0]*2)
 
-        #cegtable = Table(cegadatoklist, colWidths=[doc.width/2.0]*2)
-        #cegtable = Table(cegadatok, colWidths=[doc.width/2.0]*2)
         cegtable.setStyle(TableStyle([('INNERGRID', (0, 0), (-1, -1), 0.25, colors.black),
                                         ('FONT', (0,0), (-1,-1), 'DejaVuSerif'),
                                         ('BOX', (0, 0), (-1, -1), 0.5, colors.black)]))
         elements.append(cegtable)
 
-        '''
-        #Adds line after cegadatok
-        lineAfterCustomer = Drawing(self.width, 2)
-        lineAfterCustomer.add(Line(0,0, self.width, 2))
-        elements.append(lineAfterCustomer)
-        '''
         #Add szamlaadatok
         szamlaadatokHeader = []
         fizetesModja = Paragraph("<b>Fizetés módja</b>", styles['TableHeader'])
